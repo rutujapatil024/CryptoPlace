@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
-import './Home.css'
-import { CoinContext } from '../../context/CoinContext'
-import{Link} from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react';
+import './Home.css';
+import { CoinContext } from '../../context/CoinContext';
+import { Link } from 'react-router-dom';
+
 const Home = () => {
   const { allCoin, currency } = useContext(CoinContext);
   const [displayCoin, setDisplayCoin] = useState([]);
@@ -9,7 +10,7 @@ const Home = () => {
 
   const inputhandler = (event) => {
     setInput(event.target.value);
-  }
+  };
 
   const searchCoins = (term) => {
     if (term === "") {
@@ -21,14 +22,17 @@ const Home = () => {
       coin.symbol.toLowerCase().includes(term.toLowerCase())
     );
     setDisplayCoin(filteredCoins);
-  }
+  };
 
   const searchHandler = (event) => {
     event.preventDefault();
     searchCoins(input);
-  }
+  };
 
-  // Watch input and run search if cleared or selected from datalist
+  const getFormattedValue = (value) => {
+    return typeof value === 'number' ? value.toLocaleString() : 'N/A';
+  };
+
   useEffect(() => {
     if (input === "") {
       setDisplayCoin(allCoin);
@@ -77,23 +81,25 @@ const Home = () => {
         </div>
         {
           displayCoin.slice(0, 10).map((item, index) => (
-          <Link to={`/coin/${item.id}`} className='table-layout' key={index}>
-              <p>{item.market_cap_rank}</p>
+            <Link to={`/coin/${item.id}`} className='table-layout' key={index}>
+              <p>{item.market_cap_rank || 'N/A'}</p>
               <div className="coin-name">
                 <img src={item.image} alt="" />
                 <p>{item.name + " - " + item.symbol}</p>
               </div>
-              <p>{currency.symbol} {item.current_price.toLocaleString()}</p>
+              <p>{currency.symbol} {getFormattedValue(item.current_price)}</p>
               <p className={item.price_change_percentage_24h > 0 ? 'green' : 'red'}>
-                {Math.floor(item.price_change_percentage_24h * 100) / 100}
+                {typeof item.price_change_percentage_24h === 'number'
+                  ? (Math.floor(item.price_change_percentage_24h * 100) / 100)
+                  : 'N/A'}
               </p>
-              <p className='market-cap'>{currency.symbol} {item.market_cap.toLocaleString()}</p>
+              <p className='market-cap'>{currency.symbol} {getFormattedValue(item.market_cap)}</p>
             </Link>
           ))
         }
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Home;
