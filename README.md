@@ -1,4 +1,4 @@
-# React + Vite
+# Description: CryptoPlace is a responsive and interactive cryptocurrency tracking platform built with React. The main goal of this project was to learn how to fetch and utilize external APIs effectively, particularly the [CoinGecko API]. Through this project, I deepened my understanding of React Context, state management, dynamic routing, and data visualization.
 # Output
 ![Screenshot (136)](https://github.com/user-attachments/assets/a707bed0-b1b5-4fe6-9080-b9b289e224f1)
 ![Screenshot (131)](https://github.com/user-attachments/assets/a4f1c981-dc0b-4049-bc59-458d183cad23)
